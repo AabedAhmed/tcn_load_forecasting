@@ -76,3 +76,71 @@ python scripts/evaluate.py --model-path results/models/tcn_best.pth
 - Dropout: 0.2
 
 ## 📁 Project Structure
+├── data/              # Data storage
+├── notebooks/         # Jupyter notebooks for exploration
+├── src/              # Source code
+├── scripts/          # Executable scripts
+├── configs/          # Configuration files
+├── results/          # Model outputs and visualizations
+└── tests/            # Unit tests
+## 🔧 Configuration
+
+Edit `configs/tcn_config.yaml` to modify hyperparameters:
+```yaml
+model:
+  num_channels: [32, 64, 128, 128, 256, 256]
+  kernel_size: 3
+  dropout: 0.2
+
+training:
+  batch_size: 64
+  learning_rate: 0.001
+  epochs: 100
+  
+data:
+  lookback_window: 168
+  forecast_horizon: 1
+```
+
+## 📊 Features
+
+- ✅ Temporal feature engineering (hour, day, week patterns)
+- ✅ Multiple evaluation metrics (MAPE, MAE, RMSE)
+- ✅ Visualization tools for predictions
+- ✅ Model comparison framework
+- ✅ Configurable architecture via YAML
+- ✅ Checkpoint saving and loading
+
+## 🧪 Running Tests
+```bash
+pytest tests/
+```
+
+## 📝 Documentation
+
+- [Methodology](docs/methodology.md)
+- [Results Analysis](docs/results.md)
+- [API Reference](docs/api_reference.md)
+
+## 📚 References
+
+- Bai, S., Kolter, J. Z., & Koltun, V. (2018). An empirical evaluation of generic convolutional and recurrent networks for sequence modeling.
+- [PyTorch TCN Implementation](https://github.com/locuslab/TCN)
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👤 Author
+
+Your Name - [GitHub](https://github.com/yourusername)
+
+## 🙏 Acknowledgments
+
+- PJME dataset from Kaggle
+- PyTorch TCN library
+- Anthropic Claude for project guidance
