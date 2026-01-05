@@ -1,146 +1,69 @@
-# Short-Term Load Forecasting with Temporal Convolutional Networks
+# Short-Term Load Forecasting Using Temporal Convolutional Networks
 
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+## Project Overview
+This project implements TCN and LSTM models for next-hour electricity load forecasting using the PJME dataset.
 
-Predict next-hour electricity load for smart grids using Temporal Convolutional Networks (TCN) and compare performance with LSTM baseline.
+## Requirements
+- Python 3.8+
+- PyTorch 1.12+
+- pandas, numpy, matplotlib, scikit-learn
 
-## 🎯 Objective
-
-Develop a deep learning model to forecast hourly electricity consumption with **MAPE < 5%**, comparing TCN architecture against traditional LSTM approach.
-
-## 📊 Dataset
-
-- **Primary**: PJME Hourly Energy Consumption (2002-2018)
-- **Alternative**: UCI Individual Household Electric Power Consumption
-- **Source**: [Kaggle PJME Dataset](https://www.kaggle.com/robikscube/hourly-energy-consumption)
-
-## 🚀 Quick Start
-
-### Installation
+Install dependencies:
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/tcn-load-forecasting.git
-cd tcn-load-forecasting
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
 pip install -r requirements.txt
 ```
 
-### Download Data
+## Dataset
+PJME Hourly Energy Consumption (2002-2018)
+- Source: [Kaggle](https://www.kaggle.com/datasets/robikscube/hourly-energy-consumption)
+- 145,000+ hourly measurements
+
+## Usage
+
+### Step 1: Data Loading and EDA
 ```bash
-python scripts/download_data.py --dataset pjme
+# Run in Google Colab or Jupyter
+notebooks/step1_data_loading.ipynb
 ```
 
-### Train Models
+### Step 2: Data Preprocessing
 ```bash
-# Train LSTM baseline
-python scripts/train_lstm.py --config configs/lstm_config.yaml
-
-# Train TCN model
-python scripts/train_tcn.py --config configs/tcn_config.yaml
+notebooks/step2_preprocessing.ipynb
 ```
 
-### Evaluate
+### Step 3: Model Training
 ```bash
-python scripts/evaluate.py --model-path results/models/tcn_best.pth
+notebooks/step3_model_training.ipynb
 ```
 
-## 📈 Results
+## Results
+- Best TCN MAPE: 2.65%
+- Best LSTM MAPE: 3.52%
+- Target achieved: MAPE < 5% ✓
 
-| Model | MAPE (%) | MAE (MW) | RMSE (MW) | Training Time |
-|-------|----------|----------|-----------|---------------|
-| LSTM  | TBD      | TBD      | TBD       | TBD           |
-| TCN   | TBD      | TBD      | TBD       | TBD           |
+## Model Configurations
+**TCN:**
+- Filters: [32, 64, 128]
+- Residual blocks: [2, 3, 4]
+- Kernel sizes: [2, 3, 4]
+- Lookback windows: [24, 48, 168] hours
 
-*Results will be updated after model training*
+**LSTM:**
+- Layers: [1, 2, 3]
+- Hidden units: [32, 64, 128]
+- Lookback windows: [24, 48, 168] hours
 
-## 🏗️ Architecture
+## Authors
+- Abed Ahmed
+- Bouderbala Mohamed Islem
 
-### LSTM Baseline
-- 2 LSTM layers (128 units each)
-- Dropout (0.2)
-- Dense output layer
-- Lookback: 168 hours (1 week)
-
-### TCN Model
-- 6 residual blocks
-- Channel sizes: [32, 64, 128, 128, 256, 256]
-- Kernel size: 3
-- Dilation factors: [1, 2, 4, 8, 16, 32]
-- Dropout: 0.2
-
-## 📁 Project Structure
-├── data/              # Data storage
-├── notebooks/         # Jupyter notebooks for exploration
-├── src/              # Source code
-├── scripts/          # Executable scripts
-├── configs/          # Configuration files
-├── results/          # Model outputs and visualizations
-└── tests/            # Unit tests
-## 🔧 Configuration
-
-Edit `configs/tcn_config.yaml` to modify hyperparameters:
-```yaml
-model:
-  num_channels: [32, 64, 128, 128, 256, 256]
-  kernel_size: 3
-  dropout: 0.2
-
-training:
-  batch_size: 64
-  learning_rate: 0.001
-  epochs: 100
-  
-data:
-  lookback_window: 168
-  forecast_horizon: 1
+## Citation
+If you use this code, please cite:
 ```
-
-## 📊 Features
-
-- ✅ Temporal feature engineering (hour, day, week patterns)
-- ✅ Multiple evaluation metrics (MAPE, MAE, RMSE)
-- ✅ Visualization tools for predictions
-- ✅ Model comparison framework
-- ✅ Configurable architecture via YAML
-- ✅ Checkpoint saving and loading
-
-## 🧪 Running Tests
-```bash
-pytest tests/
+@article{yourname2024tcn,
+  title={Short-Term Load Forecasting Using Temporal Convolutional Networks},
+  author={Ahmed, Abed and Islem, Bouderbala Mohamed},
+  journal={University of Guelma},
+  year={2026}
+}
 ```
-
-## 📝 Documentation
-
-- [Methodology](docs/methodology.md)
-- [Results Analysis](docs/results.md)
-- [API Reference](docs/api_reference.md)
-
-## 📚 References
-
-- Bai, S., Kolter, J. Z., & Koltun, V. (2018). An empirical evaluation of generic convolutional and recurrent networks for sequence modeling.
-- [PyTorch TCN Implementation](https://github.com/locuslab/TCN)
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👤 Author
-
-Ahmed abed - [GitHub](https://github.com/AabedAhmed)
-
-## 🙏 Acknowledgments
-
-- PJME dataset from Kaggle
-- PyTorch TCN library
-- Anthropic Claude for project guidance
